@@ -65,7 +65,7 @@ def transcribe(job):
     model_name = job['input'].get('model', 'ivrit-ai/ivrit-ai/whisper-large-v3-ct2')
     #can cause error - try "whisper-large-v3-ct2" if default is buggy.
     is_streaming = job['input'].get('streaming', False)
-    language_input = job['input'].get('language', 'he')
+    language_input = job['input'].get('language_input', 'he')
 
     if not datatype:
         yield { "error" : "datatype field not provided. Should be 'blob' or 'url'." }
@@ -77,7 +77,7 @@ def transcribe(job):
         yield { "error" : f"engine should be 'faster-whsiper' or 'stable-whisper', but is {engine} instead." }
 
     if not language_input in ['he', 'en','fr']:
-        yield { "error" : f"language should be 'he', 'en' or 'fr', but is {language} instead." }
+        yield { "error" : f"language should be 'he', 'en' or 'fr', but is {language_input} instead." }
     
     # Get the API key from the job input
     api_key = job['input'].get('api_key', None)
