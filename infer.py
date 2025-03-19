@@ -62,8 +62,10 @@ def download_file(url, max_size_bytes, output_filename, api_key=None):
 def transcribe(job):
     datatype = job['input'].get('type', None)
     engine = job['input'].get('engine', 'faster-whisper')
-    model_name = job['input'].get('model', 'large-v2')
+    model_name = job['input'].get('model', 'ivrit-ai/ivrit-ai/whisper-large-v3-ct2')
+    #can cause error - try "whisper-large-v3-ct2" if default is buggy.
     is_streaming = job['input'].get('streaming', False)
+    language_input = job['input'].get('language', 'he')
 
     if not datatype:
         yield { "error" : "datatype field not provided. Should be 'blob' or 'url'." }
@@ -74,6 +76,9 @@ def transcribe(job):
     if not engine in ['faster-whisper', 'stable-whisper']:
         yield { "error" : f"engine should be 'faster-whsiper' or 'stable-whisper', but is {engine} instead." }
 
+    if not language_input in ['he', 'en','fr']:
+        yield { "error" : f"language should be 'he', 'en' or 'fr', but is {language} instead." }
+    
     # Get the API key from the job input
     api_key = job['input'].get('api_key', None)
 
@@ -99,14 +104,14 @@ def transcribe(job):
         result = [entry for entry in stream_gen]
         yield { 'result' : result }
 
-def transcribe_core(engine, model_name, audio_file):
+def transcribe_core(engine, model_name, audio_file,language_input):
     print('Transcribing...')
 
     if engine == 'faster-whisper':
         import faster_whisper
         model = faster_whisper.WhisperModel(model_name, device=device, compute_type='float16')
 
-        segs, _ = model.transcribe(audio_file, language='he', word_timestamps=True)
+        segs, _ = model.transcribe(audio_file, language=language_input, word_timestamps=True)
     elif engine == 'stable-whisper':
         import stable_whisper
         model = stable_whisper.load_faster_whisper(model_name, device=device, compute_type='float16')
