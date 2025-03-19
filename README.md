@@ -33,7 +33,7 @@ It is part of the [ivrit.ai](https://ivrit.ai) non-profit project.
 1. Clone this repository:
 
 ```
-git clone https://github.com/ivrit-ai/runpod-serverless.git
+git clone https://github.com/tocndixAI/runpod-multi-language.git
 cd runpod-serverless
 ```
 
