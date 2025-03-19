@@ -95,7 +95,7 @@ def transcribe(job):
             yield { "error" : f"Error downloading data from {job['input']['url']}" }
             return
 
-    stream_gen = transcribe_core(engine, model_name, audio_file)
+    stream_gen = transcribe_core(engine, model_name, audio_file,language_input)
 
     if is_streaming:
         for entry in stream_gen:
