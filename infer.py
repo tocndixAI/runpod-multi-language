@@ -116,7 +116,7 @@ def transcribe_core(engine, model_name, audio_file,language_input):
         import stable_whisper
         model = stable_whisper.load_faster_whisper(model_name, device=device, compute_type='float16')
 
-        res = model.transcribe(audio_file, language='he', word_timestamps=True)
+        res = model.transcribe(audio_file, language=language_input, word_timestamps=True)
         segs = res.segments
 
     ret = { 'segments' : [] }
