@@ -14,6 +14,7 @@ RUN pip install stable-ts==2.18.3
 
 RUN python3 -c 'import faster_whisper; m = faster_whisper.WhisperModel("ivrit-ai/whisper-large-v3-ct2")'
 RUN python3 -c 'import faster_whisper; m = faster_whisper.WhisperModel("ivrit-ai/whisper-large-v3-turbo-ct2")'
+RUN python3 -c 'import faster_whisper; m = faster_whisper.WhisperModel("openai/whisper-large-v3-turbo")'
 
 # Add your file
 ADD infer.py .

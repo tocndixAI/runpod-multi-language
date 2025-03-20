@@ -62,7 +62,7 @@ def download_file(url, max_size_bytes, output_filename, api_key=None):
 def transcribe(job):
     datatype = job['input'].get('type', None)
     engine = job['input'].get('engine', 'faster-whisper')
-    model_name = job['input'].get('model', 'ivrit-ai/ivrit-ai/whisper-large-v3-ct2')
+    #model_name = job['input'].get('model', 'ivrit-ai/whisper-large-v3-ct2')
     #can cause error - try "whisper-large-v3-ct2" if default is buggy.
     is_streaming = job['input'].get('streaming', False)
     language_input = job['input'].get('language_input', 'he')
@@ -78,6 +78,11 @@ def transcribe(job):
 
     if not language_input in ['he', 'en','fr']:
         yield { "error" : f"language should be 'he', 'en' or 'fr', but is {language_input} instead." }
+    
+    if language_input == 'he':
+        model_name="ivrit-ai/whisper-large-v3-turbo-ct2"
+    else:
+        model_name="openai/whisper-large-v3-turbo"
     
     # Get the API key from the job input
     api_key = job['input'].get('api_key', None)
