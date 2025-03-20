@@ -82,7 +82,7 @@ def transcribe(job):
     if language_input == 'he':
         model_name="ivrit-ai/whisper-large-v3-turbo-ct2"
     else:
-        model_name="deepdml/faster-whisper-large-v3-turbo-ct2""
+        model_name="deepdml/faster-whisper-large-v3-turbo-ct2"
     
     # Get the API key from the job input
     api_key = job['input'].get('api_key', None)
